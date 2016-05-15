@@ -8,18 +8,19 @@ import (
 	flag "github.com/bborbe/flagenv"
 	"github.com/bborbe/log"
 	"github.com/bborbe/server/handler/debug"
-	"github.com/bborbe/server/handler/static"
 	"github.com/facebookgo/grace/gracehttp"
 )
 
 const (
+	PARAMETER_ROOT     = "root"
 	PARAMETER_LOGLEVEL = "loglevel"
 )
 
 var (
-	logger      = log.DefaultLogger
-	portPtr     = flag.Int("port", 8080, "Port")
-	logLevelPtr = flag.String(PARAMETER_LOGLEVEL, log.DEBUG_STRING, log.FLAG_USAGE)
+	logger          = log.DefaultLogger
+	portPtr         = flag.Int("port", 8080, "Port")
+	logLevelPtr     = flag.String(PARAMETER_LOGLEVEL, log.DEBUG_STRING, log.FLAG_USAGE)
+	documentRootPtr = flag.String(PARAMETER_ROOT, "", "Document root directory")
 )
 
 func main() {
@@ -29,7 +30,7 @@ func main() {
 	logger.SetLevelThreshold(log.LogStringToLevel(*logLevelPtr))
 	logger.Debugf("set log level to %s", *logLevelPtr)
 
-	server, err := createServer(*portPtr)
+	server, err := createServer(*portPtr, *documentRootPtr)
 	if err != nil {
 		logger.Fatal(err)
 		logger.Close()
@@ -39,7 +40,10 @@ func main() {
 	gracehttp.Serve(server)
 }
 
-func createServer(port int) (*http.Server, error) {
-	handler := debug.New(static.NewHandlerStaticContent("ok"))
-	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: handler}, nil
+func createServer(port int, root string) (*http.Server, error) {
+
+	var fileServer http.Handler = http.FileServer(http.Dir(root))
+
+	fileServer = debug.New(fileServer)
+	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: fileServer}, nil
 }
