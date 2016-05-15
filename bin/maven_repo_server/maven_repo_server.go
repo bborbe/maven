@@ -9,17 +9,19 @@ import (
 	"github.com/bborbe/log"
 	"github.com/bborbe/server/handler/debug"
 	"github.com/facebookgo/grace/gracehttp"
+	"github.com/gorilla/mux"
+	"github.com/bborbe/server/handler/static"
 )
 
 const (
-	PARAMETER_ROOT     = "root"
+	PARAMETER_ROOT = "root"
 	PARAMETER_LOGLEVEL = "loglevel"
 )
 
 var (
-	logger          = log.DefaultLogger
-	portPtr         = flag.Int("port", 8080, "Port")
-	logLevelPtr     = flag.String(PARAMETER_LOGLEVEL, log.DEBUG_STRING, log.FLAG_USAGE)
+	logger = log.DefaultLogger
+	portPtr = flag.Int("port", 8080, "Port")
+	logLevelPtr = flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, log.FLAG_USAGE)
 	documentRootPtr = flag.String(PARAMETER_ROOT, "", "Document root directory")
 )
 
@@ -42,8 +44,9 @@ func main() {
 
 func createServer(port int, root string) (*http.Server, error) {
 
-	var fileServer http.Handler = http.FileServer(http.Dir(root))
+	router := mux.NewRouter()
+	router.Methods("GET").Handler(http.FileServer(http.Dir(root)))
+	router.Methods("PUT").Handler(static.NewHandlerStaticContent("ok"))
 
-	fileServer = debug.New(fileServer)
-	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: fileServer}, nil
+	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: debug.New(router)}, nil
 }
