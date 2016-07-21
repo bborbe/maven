@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"runtime"
+
 	flag "github.com/bborbe/flagenv"
 	io_util "github.com/bborbe/io/util"
 	"github.com/bborbe/log"
@@ -12,7 +14,6 @@ import (
 	"github.com/bborbe/server/handler/debug"
 	"github.com/facebookgo/grace/gracehttp"
 	"github.com/gorilla/mux"
-	"runtime"
 )
 
 const (
