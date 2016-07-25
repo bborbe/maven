@@ -8,10 +8,10 @@ import (
 	"runtime"
 
 	flag "github.com/bborbe/flagenv"
+	"github.com/bborbe/http_handler/debug"
 	io_util "github.com/bborbe/io/util"
 	"github.com/bborbe/log"
 	"github.com/bborbe/maven_repo/upload_file"
-	"github.com/bborbe/server/handler/debug"
 	"github.com/facebookgo/grace/gracehttp"
 	"github.com/gorilla/mux"
 )
