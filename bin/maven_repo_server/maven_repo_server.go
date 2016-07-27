@@ -72,14 +72,19 @@ func createServer(
 	}
 
 	logger.Debugf("root dir: %s", root)
-
-	handler := mux.NewRouter()
-	handler.Methods("GET").Handler(http.FileServer(http.Dir(root)))
-	handler.Methods("PUT").Handler(upload_file.New(root))
+	handler := createHandler(root)
 
 	if debug {
 		handler = debug_handler.New(handler)
 	}
 
 	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: handler}, nil
+}
+
+func createHandler(root string) http.Handler {
+
+	handler := mux.NewRouter()
+	handler.Methods("GET").Handler(http.FileServer(http.Dir(root)))
+	handler.Methods("PUT").Handler(upload_file.New(root))
+	return handler
 }
