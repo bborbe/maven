@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
+	debug_handler "github.com/bborbe/http_handler/debug"
 	"net/http"
 	"os"
 
 	"runtime"
 
 	flag "github.com/bborbe/flagenv"
-	"github.com/bborbe/http_handler/debug"
 	io_util "github.com/bborbe/io/util"
 	"github.com/bborbe/log"
 	"github.com/bborbe/maven_repo/upload_file"
@@ -20,6 +20,7 @@ const (
 	PARAMETER_ROOT     = "root"
 	PARAMETER_PORT     = "port"
 	PARAMETER_LOGLEVEL = "loglevel"
+	PARAMETER_DEBUG    = "debug"
 )
 
 var (
@@ -27,6 +28,7 @@ var (
 	portPtr         = flag.Int(PARAMETER_PORT, 8080, "Port")
 	logLevelPtr     = flag.String(PARAMETER_LOGLEVEL, log.INFO_STRING, log.FLAG_USAGE)
 	documentRootPtr = flag.String(PARAMETER_ROOT, "", "Document root directory")
+	debugPtr        = flag.Bool(PARAMETER_DEBUG, false, "debug")
 )
 
 func main() {
@@ -38,7 +40,11 @@ func main() {
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	server, err := createServer(*portPtr, *documentRootPtr)
+	server, err := createServer(
+		*portPtr,
+		*debugPtr,
+		*documentRootPtr,
+	)
 	if err != nil {
 		logger.Fatal(err)
 		logger.Close()
@@ -48,7 +54,11 @@ func main() {
 	gracehttp.Serve(server)
 }
 
-func createServer(port int, root string) (*http.Server, error) {
+func createServer(
+	port int,
+	debug bool,
+	root string,
+) (*http.Server, error) {
 	if port <= 0 {
 		return nil, fmt.Errorf("parameter %s invalid", PARAMETER_PORT)
 	}
@@ -62,9 +72,13 @@ func createServer(port int, root string) (*http.Server, error) {
 
 	logger.Debugf("root dir: %s", root)
 
-	router := mux.NewRouter()
-	router.Methods("GET").Handler(http.FileServer(http.Dir(root)))
-	router.Methods("PUT").Handler(upload_file.New(root))
+	handler := mux.NewRouter()
+	handler.Methods("GET").Handler(http.FileServer(http.Dir(root)))
+	handler.Methods("PUT").Handler(upload_file.New(root))
 
-	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: debug.New(router)}, nil
+	if debug {
+		handler = debug_handler.New(handler)
+	}
+
+	return &http.Server{Addr: fmt.Sprintf(":%d", port), Handler: handler}, nil
 }
