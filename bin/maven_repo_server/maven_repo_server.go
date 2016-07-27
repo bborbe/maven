@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	debug_handler "github.com/bborbe/http_handler/debug"
 	"net/http"
 	"os"
+
+	debug_handler "github.com/bborbe/http_handler/debug"
 
 	"runtime"
 
