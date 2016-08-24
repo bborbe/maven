@@ -1,0 +1,16 @@
+package: github.com/bborbe/maven_repo
+import:
+- package: github.com/bborbe/flagenv
+- package: github.com/bborbe/http_handler
+  subpackages:
+  - debug
+- package: github.com/bborbe/io
+  subpackages:
+  - util
+- package: github.com/bborbe/log
+- package: github.com/facebookgo/grace
+  subpackages:
+  - gracehttp
+- package: github.com/gorilla/mux
+testImport:
+- package: github.com/bborbe/assert

@@ -4,9 +4,18 @@
 
 `go get github.com/bborbe/maven_repo/bin/maven_repo_server`
 
+## Run
+
+```
+maven_repo_server \
+-loglevel=INFO \
+-port=8080 \
+-root=/tmp
+```
+
 ## Continuous integration
 
-[Jenkins](https://www.benjamin-borbe.de/jenkins/job/Go-Maven-Repo /)
+[Jenkins](https://www.benjamin-borbe.de/jenkins/job/Go-Maven-Repo/)
 
 ## Copyright and license
 
