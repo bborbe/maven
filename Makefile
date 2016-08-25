@@ -2,9 +2,14 @@ install:
 	GOBIN=$(GOPATH)/bin GO15VENDOREXPERIMENT=1 go install bin/maven_repo_server/maven_repo_server.go
 test:
 	GO15VENDOREXPERIMENT=1 go test `glide novendor`
-check:
-	golint ./...
+vet:
+	go tool vet .
+	go tool vet .-shadow .
+lint:
+	golint -min_confidence 1 ./...
+errcheck:
 	errcheck -ignore '(Close|Write)' ./...
+check: lint vet errcheck
 run:
 	maven_repo_server \
 	-loglevel=INFO \
