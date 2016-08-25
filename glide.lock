@@ -1,14 +1,14 @@
 hash: 5e3c016576a7ff39f34759c12ed854d49f545e229919bb51b43d8c8ab5446f96
-updated: 2016-08-24T19:05:22.612555163+02:00
+updated: 2016-08-25T20:08:33.607200738+02:00
 imports:
 - name: github.com/bborbe/flagenv
-  version: a711a961081a928e1a3bfe2a047d59a69fa6b506
+  version: 0977949b20c82a7cad254644637f29c72205d61d
 - name: github.com/bborbe/http_handler
-  version: 9157ff259dd5b969462691e14184e2fb71ba8512
+  version: 88aeecad6b6b07bc2ec369c4e147b7081310c726
   subpackages:
   - debug
 - name: github.com/bborbe/io
-  version: 56d91e8345e4418981a56bc4b8466b4096138f08
+  version: a92503d8d6377ff0e8b24ad2007cc83546a50817
   subpackages:
   - util
   - buffered_writer
@@ -28,7 +28,7 @@ imports:
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
-  version: 674ef1c28022f33fa7200f59db45e604557f0380
+  version: 34bf6dc9faa08144e925df4fa1838551b16d6c2a
 testImports:
 - name: github.com/bborbe/assert
-  version: cd6d0ec67c40ced8ca6cf72773b9e4b44420fbd2
+  version: f767bd2fffab5a86d5a887e2415d399e8aade8bf
