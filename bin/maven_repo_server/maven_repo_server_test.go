@@ -8,10 +8,10 @@ import (
 
 func TestCreateServer(t *testing.T) {
 	server, err := createServer(8080, false, "/tmp")
-	if err = AssertThat(err, NilValue()); err != nil {
+	if err := AssertThat(err, NilValue()); err != nil {
 		t.Fatal(err)
 	}
-	if err = AssertThat(server, NotNilValue()); err != nil {
+	if err := AssertThat(server, NotNilValue()); err != nil {
 		t.Fatal(err)
 	}
 }
