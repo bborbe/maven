@@ -12,7 +12,8 @@ errcheck:
 check: lint vet errcheck
 run:
 	maven_repo_server \
-	-loglevel=INFO \
+	-logtostderr \
+	-v=2 \
 	-port=8080 \
 	-root=/tmp
 open:
