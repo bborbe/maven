@@ -7,7 +7,7 @@ import:
 - package: github.com/bborbe/io
   subpackages:
   - util
-- package: github.com/bborbe/log
+- package: github.com/golang/glog
 - package: github.com/facebookgo/grace
   subpackages:
   - gracehttp

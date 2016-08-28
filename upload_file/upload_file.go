@@ -10,10 +10,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/bborbe/log"
+	"github.com/golang/glog"
 )
-
-var logger = log.DefaultLogger
 
 type handler struct {
 	root string
@@ -36,7 +34,7 @@ func (h *handler) serveHTTP(responseWriter http.ResponseWriter, request *http.Re
 	if err != nil {
 		return err
 	}
-	logger.Debugf("upload file to: %s", target)
+	glog.V(2).Infof("upload file to: %s", target)
 
 	err = os.MkdirAll(path.Dir(target), 0755)
 	if err != nil {
@@ -51,7 +49,7 @@ func (h *handler) serveHTTP(responseWriter http.ResponseWriter, request *http.Re
 	if err != nil {
 		return err
 	}
-	logger.Debugf("completed upload to %s", target)
+	glog.V(2).Infof("completed upload to %s", target)
 	return nil
 }
 
