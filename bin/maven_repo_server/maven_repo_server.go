@@ -49,6 +49,7 @@ func do(
 	debug bool,
 	root string,
 ) error {
+	glog.Infof("port %v debug: %v root: %v", port, debug, root)
 	server, err := createServer(
 		port,
 		debug,
