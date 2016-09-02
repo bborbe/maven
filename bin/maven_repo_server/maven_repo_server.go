@@ -17,15 +17,13 @@ import (
 )
 
 const (
-	PARAMETER_ROOT  = "root"
-	PARAMETER_PORT  = "port"
-	PARAMETER_DEBUG = "debug"
+	PARAMETER_ROOT = "root"
+	PARAMETER_PORT = "port"
 )
 
 var (
 	portPtr         = flag.Int(PARAMETER_PORT, 8080, "Port")
 	documentRootPtr = flag.String(PARAMETER_ROOT, "", "Document root directory")
-	debugPtr        = flag.Bool(PARAMETER_DEBUG, false, "debug")
 )
 
 func main() {
@@ -36,7 +34,6 @@ func main() {
 
 	err := do(
 		*portPtr,
-		*debugPtr,
 		*documentRootPtr,
 	)
 	if err != nil {
@@ -46,13 +43,11 @@ func main() {
 
 func do(
 	port int,
-	debug bool,
 	root string,
 ) error {
-	glog.Infof("port %v debug: %v root: %v", port, debug, root)
+	glog.Infof("port %v root: %v", port, root)
 	server, err := createServer(
 		port,
-		debug,
 		root,
 	)
 	if err != nil {
@@ -65,7 +60,6 @@ func do(
 
 func createServer(
 	port int,
-	debug bool,
 	root string,
 ) (*http.Server, error) {
 	if port <= 0 {
@@ -82,7 +76,7 @@ func createServer(
 	glog.V(2).Infof("root dir: %s", root)
 	handler := createHandler(root)
 
-	if debug {
+	if glog.V(4) {
 		handler = debug_handler.New(handler)
 	}
 
