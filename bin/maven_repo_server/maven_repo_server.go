@@ -10,11 +10,11 @@ import (
 
 	flag "github.com/bborbe/flagenv"
 	io_util "github.com/bborbe/io/util"
+	"github.com/bborbe/maven_repo/model"
 	"github.com/bborbe/maven_repo/upload_file"
 	"github.com/facebookgo/grace/gracehttp"
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
-	"github.com/bborbe/maven_repo/model"
 )
 
 const (
@@ -23,7 +23,7 @@ const (
 )
 
 var (
-	portPtr = flag.Int(PARAMETER_PORT, 8080, "Port")
+	portPtr         = flag.Int(PARAMETER_PORT, 8080, "Port")
 	documentRootPtr = flag.String(PARAMETER_ROOT, "", "Document root directory")
 )
 
