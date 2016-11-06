@@ -1,3 +1,4 @@
+all: test install run
 install:
 	GOBIN=$(GOPATH)/bin GO15VENDOREXPERIMENT=1 go install bin/maven_repo_server/*.go
 test:
