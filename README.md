@@ -16,7 +16,7 @@ maven_repo_server \
 
 ## Continuous integration
 
-[Jenkins](https://www.benjamin-borbe.de/jenkins/job/Go-Maven-Repo/)
+[Jenkins](https://jenkins.benjamin-borbe.de/job/Go-Maven-Repo/)
 
 ## Copyright and license
 
