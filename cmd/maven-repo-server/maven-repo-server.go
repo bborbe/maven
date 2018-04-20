@@ -10,8 +10,8 @@ import (
 
 	flag "github.com/bborbe/flagenv"
 	io_util "github.com/bborbe/io/util"
-	"github.com/bborbe/maven_repo/model"
-	"github.com/bborbe/maven_repo/upload_file"
+	"github.com/bborbe/maven/model"
+	"github.com/bborbe/maven/upload_file"
 	"github.com/facebookgo/grace/gracehttp"
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
