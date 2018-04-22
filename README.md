@@ -2,12 +2,14 @@
 
 ## Install
 
-`go get github.com/bborbe/maven/cmd/maven-repo-server`
+```
+go get github.com/bborbe/maven
+```
 
 ## Run
 
 ```
-maven-repo-server \
+maven \
 -logtostderr \
 -v=2 \
 -port=8080 \
