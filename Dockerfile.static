@@ -1,6 +1,6 @@
 FROM tianon/true
 MAINTAINER Benjamin Borbe <bborbe@rocketnews.de>
-COPY maven_repo_server /
+COPY maven /
 COPY files/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 VOLUME ["/data"]
-ENTRYPOINT ["/maven_repo_server"]
+ENTRYPOINT ["/maven"]

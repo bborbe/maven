@@ -42,15 +42,15 @@ clean:
 	docker rmi $(REGISTRY)/$(IMAGE):$(VERSION)
 
 buildgo:
-	CGO_ENABLED=0 GOOS=linux go build -ldflags "-s" -a -installsuffix cgo -o maven-server ./go/src/github.com/$(IMAGE)/cmd/maven-server
+	CGO_ENABLED=0 GOOS=linux go build -ldflags "-s" -a -installsuffix cgo -o maven ./go/src/github.com/$(IMAGE)
 
 build:
 	docker build --build-arg VERSION=$(VERSION) --no-cache --rm=true -t $(REGISTRY)/$(IMAGE)-build:$(VERSION) -f ./Dockerfile.build .
 	docker run -t $(REGISTRY)/$(IMAGE)-build:$(VERSION) /bin/true
-	docker cp `docker ps -q -n=1 -f ancestor=$(REGISTRY)/$(IMAGE)-build:$(VERSION) -f status=exited`:/maven-server .
+	docker cp `docker ps -q -n=1 -f ancestor=$(REGISTRY)/$(IMAGE)-build:$(VERSION) -f status=exited`:/maven .
 	docker rm `docker ps -q -n=1 -f ancestor=$(REGISTRY)/$(IMAGE)-build:$(VERSION) -f status=exited`
 	docker build --no-cache --rm=true --tag=$(REGISTRY)/$(IMAGE):$(VERSION) -f Dockerfile.static .
-	rm maven-server
+	rm maven
 
 upload:
 	docker push $(REGISTRY)/$(IMAGE):$(VERSION)
