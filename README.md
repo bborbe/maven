@@ -1,5 +1,7 @@
 # Maven Repo Server
 
+Lightweight Maven server written in Go.
+
 ## Install
 
 ```
