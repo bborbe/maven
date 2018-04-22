@@ -1,14 +1,12 @@
 package upload_file
 
 import (
-	"net/http"
-	"path"
-
 	"fmt"
-	"strings"
-
 	"io"
+	"net/http"
 	"os"
+	"path"
+	"strings"
 
 	"github.com/golang/glog"
 )
